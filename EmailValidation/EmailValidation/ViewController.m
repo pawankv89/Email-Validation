@@ -10,6 +10,9 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+
 @end
 
 @implementation ViewController
@@ -18,6 +21,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    //Status
+    self.statusLabel.text = [NSString stringWithFormat:@"%@", @""];
+    self.statusLabel.textColor = UIColor.clearColor;
+    
+    /*
     if ([self isValidEmailAddress:@"pawan@gmail.co.uk"]) {
         NSLog(@"Validate");
     }
@@ -31,7 +39,29 @@
     else{
         NSLog(@"InValidate");
     }
+     */
 }
+
+- (IBAction)ValidateButtonTap:(id)sender {
+    
+    if (self.emailTextField.text.length == 0)
+    {
+        return;
+    }
+    
+    if ([self isValidEmailAddress: self.emailTextField.text]) {
+        NSLog(@"Validate");
+        self.statusLabel.text = [NSString stringWithFormat:@"%@ %@", @"Status:- ", @"Validate"];
+        self.statusLabel.textColor = UIColor.greenColor;
+    }
+    else{
+        NSLog(@"InValidate");
+        self.statusLabel.text = [NSString stringWithFormat:@"%@ %@", @"Status:- ", @"InValidate"];
+        self.statusLabel.textColor = UIColor.redColor;
+    }
+}
+
+
 - (BOOL)isValidEmailAddress:(NSString *)emailAddress {
     
     //Create a regex string
